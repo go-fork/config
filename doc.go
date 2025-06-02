@@ -49,7 +49,7 @@
 //
 //	// Lấy config từ container
 //	container := app.Container()
-//	cfg := container.Get("config").(config.Manager)
+//	cfg := container.MustMake("config").(config.Manager)
 //
 //	// Cấu hình và đọc file
 //	cfg.SetConfigFile("config.yaml")
@@ -84,6 +84,6 @@
 // Package này giúp nhất quán hóa quản lý cấu hình trong ứng dụng Go, tận dụng
 // sức mạnh của Viper và bổ sung các tính năng hữu ích cho ứng dụng hiện đại.
 //
-// Module này tương thích đầy đủ với go.fork.vn/di từ phiên bản v0.0.5 trở lên,
+// Module này tương thích đầy đủ với go.fork.vn/di từ phiên bản v0.1.1 trở lên,
 // cài đặt đầy đủ interface ServiceProvider với các phương thức Register, Boot, Requires và Providers.
 package config

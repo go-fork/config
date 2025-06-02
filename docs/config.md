@@ -141,7 +141,7 @@ type ServiceProvider struct{}
 func (p *ServiceProvider) Register(container di.Container) error
 func (p *ServiceProvider) Requires() []string
 func (p *ServiceProvider) Providers() []string
-func (p *ServiceProvider) Boot(app interface{})
+func (p *ServiceProvider) Boot(app Application)
 ```
 
 #### Lifecycle

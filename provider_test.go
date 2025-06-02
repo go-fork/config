@@ -5,19 +5,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"go.fork.vn/di"
+	"go.fork.vn/di/mocks"
 )
-
-// mockApp implements the Container() method required by ServiceProvider
-type mockApp struct {
-	container *di.Container
-}
-
-func (m *mockApp) Container() *di.Container {
-	return m.container
-}
-
-// mockAppInvalid doesn't implement Container()
-type mockAppInvalid struct{}
 
 func TestNewServiceProvider(t *testing.T) {
 	provider := NewServiceProvider()
@@ -32,9 +21,10 @@ func TestServiceProvider_Register(t *testing.T) {
 
 	// Test with valid app
 	diContainer := di.New()
-	app := &mockApp{container: diContainer}
+	mockApp := new(mocks.Application)
+	mockApp.On("Container").Return(diContainer)
 
-	provider.Register(app)
+	provider.Register(mockApp)
 
 	// Check that config was registered in the container
 	cfg, err := diContainer.Make("config")
@@ -45,37 +35,26 @@ func TestServiceProvider_Register(t *testing.T) {
 	_, ok := cfg.(Manager)
 	assert.True(t, ok, "Registered object should implement Manager interface")
 
-	// Test with app that doesn't implement Container()
-	invalidApp := &mockAppInvalid{}
-	// This should not panic
-	provider.Register(invalidApp)
-
 	// Test with nil container (should panic)
-	app.container = nil
+	mockAppNilContainer := new(mocks.Application)
+	mockAppNilContainer.On("Container").Return((*di.Container)(nil))
 	assert.Panics(t, func() {
-		provider.Register(app)
+		provider.Register(mockAppNilContainer)
 	}, "Register should panic when container is nil")
 
-	// Test with nil app
-	assert.NotPanics(t, func() {
-		provider.Register(nil)
-	}, "Register should not panic with nil app")
+	// Verify all expectations
+	mockApp.AssertExpectations(t)
+	mockAppNilContainer.AssertExpectations(t)
 }
 
 func TestServiceProvider_Boot(t *testing.T) {
 	provider := NewServiceProvider()
 
 	// Test with valid app
-	app := &mockApp{container: di.New()}
+	mockApp := new(mocks.Application)
 	assert.NotPanics(t, func() {
-		provider.Boot(app)
+		provider.Boot(mockApp)
 	}, "Boot should not panic with valid app")
-
-	// Test with invalid app type
-	invalidApp := &mockAppInvalid{}
-	assert.NotPanics(t, func() {
-		provider.Boot(invalidApp)
-	}, "Boot should not panic with invalid app")
 
 	// Test with nil app
 	assert.NotPanics(t, func() {

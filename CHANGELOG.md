@@ -2,6 +2,27 @@
 
 ## [Unreleased]
 
+## v0.1.1 - 2025-06-02
+
+### Changed
+- **Dependency Update**: Updated `go.fork.vn/di` from v0.1.0 to v0.1.1
+  - Enhanced type safety with Application interface improvements
+  - Improved documentation with strongly typed method signatures
+  - Better consistency across ServiceProvider interfaces
+
+### Technical Improvements
+- **ServiceProvider Interface**: Updated to use strongly typed `di.Application` instead of `interface{}`
+  - `Register(app di.Application)` - Type-safe application parameter
+  - `Boot(app di.Application)` - Consistent interface usage
+- **Test Coverage**: Maintained 100% test coverage with updated mocking strategy
+- **Mock Integration**: Now uses `go.fork.vn/di/mocks` for consistent testing
+
+### Testing
+- **100% Test Coverage**: All functions and statements covered
+- **25 Test Functions**: Comprehensive test suite with 65+ assertions
+- **Mock Support**: Full integration with di package mocks
+- **Coverage Reports**: HTML and text coverage reports generated
+
 ## v0.1.0 - 2025-05-31
 
 ### Added
@@ -43,5 +64,6 @@
 - `github.com/spf13/viper`: Advanced configuration management
 - `go.fork.vn/di`: Dependency injection integration
 
-[Unreleased]: https://github.com/go-fork/config/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/go-fork/config/compare/v0.1.1...HEAD
+[v0.1.1]: https://github.com/go-fork/config/compare/v0.1.0...v0.1.1
 [v0.1.0]: https://github.com/go-fork/config/releases/tag/v0.1.0

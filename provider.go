@@ -39,24 +39,17 @@ func NewServiceProvider() di.ServiceProvider {
 // tạo một config manager mới và đăng ký vào DI container của ứng dụng.
 //
 // Params:
-//   - app: interface{} - Đối tượng ứng dụng phải implement interface:
-//     Container() *di.Container - Trả về DI container
+//   - app: di.Application - Đối tượng ứng dụng implementing Application interface
 //
 // Luồng thực thi:
-//  1. Kiểm tra app có implement Container() không, nếu không thì return
-//  2. Lấy container từ app, kiểm tra nếu nil thì panic
-//  3. Tạo config manager mới
-//  4. Đăng ký config manager vào container với key "config"
+//  1. Lấy container từ app
+//  2. Tạo config manager mới
+//  3. Đăng ký config manager vào container với key "config"
 //
 // Việc cấu hình (đọc từ file, biến môi trường, vv) sẽ được thực hiện bởi ứng dụng,
 // cho phép mỗi ứng dụng tùy chỉnh cấu hình theo nhu cầu riêng.
-func (p *ServiceProvider) Register(app interface{}) {
-	// Lấy container từ app nếu có
-	appWithContainer, ok := app.(interface{ Container() *di.Container })
-	if !ok {
-		return // Không cần xử lý nếu app không implement Container()
-	}
-	container := appWithContainer.Container()
+func (p *ServiceProvider) Register(app di.Application) {
+	container := app.Container()
 	if container == nil {
 		panic("DI container is nil")
 	}
@@ -73,8 +66,8 @@ func (p *ServiceProvider) Register(app interface{}) {
 // không cần thực hiện thêm hành động nào ở giai đoạn boot.
 //
 // Params:
-//   - app: interface{} - Đối tượng ứng dụng, không sử dụng trong phương thức này
-func (p *ServiceProvider) Boot(app interface{}) {
+//   - app: di.Application - Đối tượng ứng dụng implementing Application interface
+func (p *ServiceProvider) Boot(app di.Application) {
 	// Safety check, though method is a no-op
 	if app == nil {
 		return
