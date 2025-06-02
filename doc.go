@@ -84,6 +84,13 @@
 // Package này giúp nhất quán hóa quản lý cấu hình trong ứng dụng Go, tận dụng
 // sức mạnh của Viper và bổ sung các tính năng hữu ích cho ứng dụng hiện đại.
 //
-// Module này tương thích đầy đủ với go.fork.vn/di từ phiên bản v0.1.1 trở lên,
+// Module này tương thích đầy đủ với go.fork.vn/di từ phiên bản v0.1.2 trở lên,
 // cài đặt đầy đủ interface ServiceProvider với các phương thức Register, Boot, Requires và Providers.
+//
+// # Thay đổi trong phiên bản v0.1.2
+//
+// - Cập nhật để tương thích với go.fork.vn/di v0.1.2
+// - Thay đổi Container interface từ *di.Container thành di.Container
+// - Cải thiện documentation và test coverage
+// - Tối ưu performance và stability
 package config

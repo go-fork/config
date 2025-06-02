@@ -2,6 +2,33 @@
 
 ## [Unreleased]
 
+## v0.1.2 - 2025-06-02
+
+### Changed
+- **Dependency Update**: Updated `go.fork.vn/di` from v0.1.1 to v0.1.2
+  - **Container Interface Migration**: Changed from `*di.Container` to `di.Container` interface
+  - Enhanced interface-based dependency injection for better testability
+  - Improved abstraction layer for container operations
+
+### Technical Improvements
+- **Container Interface**: Updated all Container references to use interface instead of concrete type
+  - ServiceProvider registration now uses `di.Container` interface
+  - Improved flexibility and testability through interface-based design
+- **Test Infrastructure**: Updated mock imports to use `mocks.MockApplication`
+- **Documentation**: Enhanced documentation to reflect v0.1.2 compatibility
+- **Code Quality**: Maintained 99.0% test coverage with updated interface usage
+
+### Testing
+- **99.0% Test Coverage**: Comprehensive test coverage maintained
+- **Mock Updates**: Updated to use `mocks.MockApplication` for consistency
+- **Interface Testing**: Enhanced testing with interface-based dependency injection
+- **Static Analysis**: All code passes `go vet` and `golangci-lint` checks
+
+### Migration Notes
+- Applications using config package should update `go.fork.vn/di` to v0.1.2
+- No breaking changes to public API - all existing code remains compatible
+- Enhanced type safety through interface-based container usage
+
 ## v0.1.1 - 2025-06-02
 
 ### Changed

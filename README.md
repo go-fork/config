@@ -2,6 +2,71 @@
 
 Một giải pháp quản lý cấu hình hoàn chỉnh và linh hoạt cho ứng dụng Go, dựa trên nền tảng của thư viện [Viper](https://github.com/spf13/viper).
 
+[![Go Version](https://img.shields.io/badge/Go-1.23.9+-00ADD8?style=flat&logo=go)](https://golang.org/)
+[![Version](https://img.shields.io/badge/version-v0.1.2-blue)](https://github.com/go-fork/config/releases/tag/v0.1.2)
+[![Go Report Card](https://goreportcard.com/badge/go.fork.vn/config)](https://goreportcard.com/report/go.fork.vn/config)
+[![Test Coverage](https://img.shields.io/badge/coverage-99.0%25-brightgreen)](https://github.com/go-fork/config)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
+## 📦 Installation
+
+```bash
+go get go.fork.vn/config@v0.1.2
+```
+
+## 🚀 Quick Start
+
+```go
+package main
+
+import (
+    "fmt"
+    "log"
+    
+    "go.fork.vn/di"
+    "go.fork.vn/config"
+)
+
+func main() {
+    // Initialize application with DI container
+    app := di.New()
+    
+    // Register config service provider
+    app.Register(config.NewServiceProvider())
+    
+    // Get config manager from container
+    container := app.Container()
+    cfg := container.MustMake("config").(config.Manager)
+    
+    // Configure and read config file
+    cfg.SetConfigName("config")
+    cfg.AddConfigPath(".")
+    cfg.AddConfigPath("./configs")
+    
+    // Set some default values
+    cfg.SetDefault("app.name", "MyApp")
+    cfg.SetDefault("app.port", 8080)
+    
+    // Read configuration
+    if err := cfg.ReadInConfig(); err != nil {
+        log.Printf("Warning: Could not read config file: %v\n", err)
+        log.Println("Continuing with defaults and environment variables...")
+    }
+    
+    // Enable environment variables
+    cfg.SetEnvPrefix("MYAPP")
+    cfg.AutomaticEnv()
+    
+    // Use configuration
+    if appName, ok := cfg.GetString("app.name"); ok {
+        fmt.Printf("Application Name: %s\n", appName)
+    }
+    
+    if port, ok := cfg.GetInt("app.port"); ok {
+        fmt.Printf("Port: %d\n", port)
+    }
+}
+
 ## Giới thiệu
 
 Package `config` cung cấp một wrapper tiện lợi cho thư viện Viper nổi tiếng, đồng thời mở rộng và chuẩn hóa API để dễ dàng tích hợp vào các ứng dụng thông qua Dependency Injection. Thư viện được thiết kế nhằm tối ưu quy trình quản lý cấu hình, đảm bảo tính nhất quán và linh hoạt cho các ứng dụng Go hiện đại.

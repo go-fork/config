@@ -14,7 +14,7 @@ import (
 // Việc cấu hình cụ thể (đọc file, biến môi trường, v.v.) được thực hiện bởi ứng dụng.
 //
 // Để sử dụng ServiceProvider, ứng dụng cần:
-//   - Implement interface Container() *di.Container để cung cấp DI container
+//   - Implement interface Container() di.Container để cung cấp DI container
 //   - Implement interface BasePath(path ...string) string để cung cấp đường dẫn đến thư mục configs
 type ServiceProvider struct{}
 

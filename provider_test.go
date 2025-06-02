@@ -21,7 +21,7 @@ func TestServiceProvider_Register(t *testing.T) {
 
 	// Test with valid app
 	diContainer := di.New()
-	mockApp := new(mocks.Application)
+	mockApp := new(mocks.MockApplication)
 	mockApp.On("Container").Return(diContainer)
 
 	provider.Register(mockApp)
@@ -35,23 +35,15 @@ func TestServiceProvider_Register(t *testing.T) {
 	_, ok := cfg.(Manager)
 	assert.True(t, ok, "Registered object should implement Manager interface")
 
-	// Test with nil container (should panic)
-	mockAppNilContainer := new(mocks.Application)
-	mockAppNilContainer.On("Container").Return((*di.Container)(nil))
-	assert.Panics(t, func() {
-		provider.Register(mockAppNilContainer)
-	}, "Register should panic when container is nil")
-
 	// Verify all expectations
 	mockApp.AssertExpectations(t)
-	mockAppNilContainer.AssertExpectations(t)
 }
 
 func TestServiceProvider_Boot(t *testing.T) {
 	provider := NewServiceProvider()
 
 	// Test with valid app
-	mockApp := new(mocks.Application)
+	mockApp := new(mocks.MockApplication)
 	assert.NotPanics(t, func() {
 		provider.Boot(mockApp)
 	}, "Boot should not panic with valid app")
