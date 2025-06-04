@@ -2,6 +2,57 @@
 
 ## [Unreleased]
 
+## v0.1.3 - 2025-06-04
+
+### Added
+- **GitHub Actions CI/CD Pipeline**: Complete automation for testing, building, and releasing
+  - Continuous Integration workflow with Go 1.23-1.24 matrix testing
+  - Automated release workflow triggered by version tags
+  - Weekly dependency update automation
+- **Release Management System**: Structured release workflow with templates
+  - Release documentation templates (RELEASE_NOTES.md, MIGRATION.md, RELEASE_SUMMARY.md)
+  - Versioned release archives in `releases/` directory
+  - Automated scripts for release template generation and archiving
+- **GitHub Configuration**: Professional GitHub repository setup
+  - Issue and PR templates for standardized contributions
+  - CODEOWNERS file for code ownership management
+  - Dependabot configuration for automated dependency updates
+  - Funding configuration for project sponsorship
+- **Documentation Enhancement**: Comprehensive contribution and security documentation
+  - CONTRIBUTING.md with detailed contribution guidelines
+  - SECURITY.md with security policy and vulnerability reporting procedures
+  - Enhanced README.md with updated Go version requirements
+
+### Changed
+- **Go Version Requirement**: Updated from Go 1.21+ to Go 1.23+ for Fork framework compatibility
+- **Dependency Update**: Updated `go.fork.vn/di` from v0.1.2 to v0.1.3
+- **Project Structure**: Restructured to match go-fork/di project standards
+  - Added `.github/` folder with workflows and templates
+  - Added `releases/` folder for version management
+  - Added `scripts/` folder for automation tools
+
+### Fixed
+- **Test Assertions**: Corrected ServiceProvider.Boot panic behavior test expectations
+- **Import Compatibility**: Fixed import paths for di_mocks package in test files
+
+### Technical Improvements
+- **Code Quality**: Enhanced linting and code quality checks
+  - golangci-lint integration with zero linting errors
+  - Race condition detection in test suite
+  - 98.0% test coverage maintained
+- **Automation Scripts**: Created executable scripts for release management
+  - `scripts/create_release_templates.sh`: Generate release templates
+  - `scripts/archive_release.sh`: Archive and manage releases
+- **CI/CD Integration**: Multi-platform testing and automated workflows
+  - Matrix testing across Go 1.23 and 1.24
+  - Automated dependency updates via Dependabot
+  - Release automation with GitHub Actions
+
+### Migration Notes
+- Update Go version to 1.23+ to ensure compatibility
+- No breaking changes to public API - all existing code remains compatible
+- Enhanced project structure for better maintainability and contribution
+
 ## v0.1.2 - 2025-06-02
 
 ### Changed
@@ -91,6 +142,8 @@
 - `github.com/spf13/viper`: Advanced configuration management
 - `go.fork.vn/di`: Dependency injection integration
 
-[Unreleased]: https://github.com/go-fork/config/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/go-fork/config/compare/v0.1.3...HEAD
+[v0.1.3]: https://github.com/go-fork/config/compare/v0.1.2...v0.1.3
+[v0.1.2]: https://github.com/go-fork/config/compare/v0.1.1...v0.1.2
 [v0.1.1]: https://github.com/go-fork/config/compare/v0.1.0...v0.1.1
 [v0.1.0]: https://github.com/go-fork/config/releases/tag/v0.1.0

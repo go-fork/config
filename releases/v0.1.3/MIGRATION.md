@@ -1,33 +1,31 @@
-# Migration Guide - v0.1.4
+# Migration Guide - v0.1.3
 
 ## Overview
-This guide helps you migrate from the previous version to v0.1.4.
+This guide helps you migrate from v0.1.2 to v0.1.3. This is primarily a project infrastructure release with minimal API changes.
 
 ## Prerequisites
-- Go 1.23 or later
+- Go 1.23 or later (updated from Go 1.21+)
 - Previous version installed
 
 ## Quick Migration Checklist
-- [ ] Update import statements (if changed)
-- [ ] Update function calls (if signatures changed)
-- [ ] Update configuration (if format changed)
-- [ ] Run tests to ensure compatibility
-- [ ] Update documentation references
+- [ ] Update Go version to 1.23+ if needed
+- [ ] Update dependencies with `go mod tidy`
+- [ ] Verify tests still pass with `go test ./...`
+- [ ] No code changes required for most users
 
 ## Breaking Changes
 
-### API Changes
-#### Changed Functions
+### Go Version Requirement
 ```go
-// Old way (previous version)
-oldFunction(param1, param2)
+// Previous requirement
+go 1.21
 
-// New way (v0.1.4)
-newFunction(param1, param2, newParam)
+// New requirement (v0.1.3)
+go 1.23
 ```
 
-#### Removed Functions
-- `removedFunction()` - Use `newAlternativeFunction()` instead
+#### No API Changes
+This release focuses on project infrastructure improvements. All existing APIs remain unchanged and fully compatible.
 
 #### Changed Types
 ```go
@@ -63,7 +61,7 @@ new_option: false
 
 ### Step 1: Update Dependencies
 ```bash
-go get go.fork.vn/config@v0.1.4
+go get go.fork.vn/config@v0.1.3
 go mod tidy
 ```
 
@@ -105,7 +103,7 @@ go test ./...
 **Solution**: Cast the value or update variable type
 
 ## Getting Help
-- Check the [documentation](https://pkg.go.dev/go.fork.vn/config@v0.1.4)
+- Check the [documentation](https://pkg.go.dev/go.fork.vn/config@v0.1.3)
 - Search [existing issues](https://github.com/go-fork/config/issues)
 - Create a [new issue](https://github.com/go-fork/config/issues/new) if needed
 
