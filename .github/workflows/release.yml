@@ -1,0 +1,65 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.23'
+
+    - name: Run tests
+      run: go test -v ./...
+
+    - name: Generate changelog
+      id: changelog
+      run: |
+        # Extract version from tag
+        VERSION=${GITHUB_REF#refs/tags/}
+        echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+        
+        # Look for release notes file
+        if [ -f "releases/${VERSION}/RELEASE_NOTES_${VERSION}.md" ]; then
+          echo "RELEASE_NOTES_FILE=releases/${VERSION}/RELEASE_NOTES_${VERSION}.md" >> $GITHUB_OUTPUT
+        elif [ -f "RELEASE_NOTES_${VERSION}.md" ]; then
+          echo "RELEASE_NOTES_FILE=RELEASE_NOTES_${VERSION}.md" >> $GITHUB_OUTPUT
+        else
+          # Create basic release notes from git log
+          echo "RELEASE_NOTES_FILE=auto_release_notes.md" >> $GITHUB_OUTPUT
+          echo "# Release $VERSION" > auto_release_notes.md
+          echo "" >> auto_release_notes.md
+          echo "## Changes" >> auto_release_notes.md
+          git log --pretty=format:"- %s" $(git describe --tags --abbrev=0 HEAD^)..HEAD >> auto_release_notes.md || echo "- Initial release" >> auto_release_notes.md
+        fi
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        draft: false
+        prerelease: false
+        body_path: ${{ steps.changelog.outputs.RELEASE_NOTES_FILE }}
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Update Go Package Registry
+      run: |
+        # Trigger Go module proxy update
+        VERSION=${GITHUB_REF#refs/tags/}
+        curl -X POST "https://proxy.golang.org/go.fork.vn/config/@v/${VERSION}.info" || true

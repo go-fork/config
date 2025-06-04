@@ -2,7 +2,7 @@
 
 Một giải pháp quản lý cấu hình hoàn chỉnh và linh hoạt cho ứng dụng Go, dựa trên nền tảng của thư viện [Viper](https://github.com/spf13/viper).
 
-[![Go Version](https://img.shields.io/badge/Go-1.23.9+-00ADD8?style=flat&logo=go)](https://golang.org/)
+[![Go Version](https://img.shields.io/badge/Go-1.23+-00ADD8?style=flat&logo=go)](https://golang.org/)
 [![Version](https://img.shields.io/badge/version-v0.1.2-blue)](https://github.com/go-fork/config/releases/tag/v0.1.2)
 [![Go Report Card](https://goreportcard.com/badge/go.fork.vn/config)](https://goreportcard.com/report/go.fork.vn/config)
 [![Test Coverage](https://img.shields.io/badge/coverage-99.0%25-brightgreen)](https://github.com/go-fork/config)
@@ -11,7 +11,7 @@ Một giải pháp quản lý cấu hình hoàn chỉnh và linh hoạt cho ứn
 ## 📦 Installation
 
 ```bash
-go get go.fork.vn/config@v0.1.2
+go get go.fork.vn/config
 ```
 
 ## 🚀 Quick Start
