@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"go.fork.vn/di"
-	"go.fork.vn/di/mocks"
+	di_mocks "go.fork.vn/di/mocks"
 )
 
 func TestNewServiceProvider(t *testing.T) {
@@ -21,7 +21,7 @@ func TestServiceProvider_Register(t *testing.T) {
 
 	// Test with valid app
 	diContainer := di.New()
-	mockApp := new(mocks.MockApplication)
+	mockApp := new(di_mocks.MockApplication)
 	mockApp.On("Container").Return(diContainer)
 
 	provider.Register(mockApp)
@@ -43,15 +43,15 @@ func TestServiceProvider_Boot(t *testing.T) {
 	provider := NewServiceProvider()
 
 	// Test with valid app
-	mockApp := new(mocks.MockApplication)
+	mockApp := new(di_mocks.MockApplication)
 	assert.NotPanics(t, func() {
 		provider.Boot(mockApp)
 	}, "Boot should not panic with valid app")
 
-	// Test with nil app
-	assert.NotPanics(t, func() {
+	// Test with nil app - should panic
+	assert.Panics(t, func() {
 		provider.Boot(nil)
-	}, "Boot should not panic with nil app")
+	}, "Boot should panic with nil app")
 }
 
 func TestServiceProvider_Requires(t *testing.T) {

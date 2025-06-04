@@ -616,10 +616,10 @@ func TestManager_ExtendedFileOps(t *testing.T) {
 func TestServiceProvider_BootComplete(t *testing.T) {
 	provider := NewServiceProvider()
 
-	// Test with nil app
-	assert.NotPanics(t, func() {
+	// Test with nil app - should panic
+	assert.Panics(t, func() {
 		provider.Boot(nil)
-	}, "Boot should not panic with nil app")
+	}, "Boot should panic with nil app")
 }
 
 func TestManager_MoreSliceTests(t *testing.T) {

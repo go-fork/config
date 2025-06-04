@@ -49,11 +49,13 @@ func NewServiceProvider() di.ServiceProvider {
 // Việc cấu hình (đọc từ file, biến môi trường, vv) sẽ được thực hiện bởi ứng dụng,
 // cho phép mỗi ứng dụng tùy chỉnh cấu hình theo nhu cầu riêng.
 func (p *ServiceProvider) Register(app di.Application) {
+	if app == nil {
+		panic("application is nil")
+	}
 	container := app.Container()
 	if container == nil {
-		panic("DI container is nil")
+		panic("di container is nil")
 	}
-
 	// Tạo một config manager mới và đăng ký vào container
 	manager := NewConfig()
 	container.Instance("config", manager)
@@ -70,7 +72,7 @@ func (p *ServiceProvider) Register(app di.Application) {
 func (p *ServiceProvider) Boot(app di.Application) {
 	// Safety check, though method is a no-op
 	if app == nil {
-		return
+		panic("application is nil")
 	}
 }
 
